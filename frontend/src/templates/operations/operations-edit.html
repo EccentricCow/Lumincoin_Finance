@@ -1,0 +1,32 @@
+<div class="operations-page operations-action-page">
+    <h1 class="text-primary-emphasis pb-5 mb-3">Редактирование дохода/расхода</h1>
+    <form>
+        <select class="form-select form-input" id="type">
+            <option value="income">Доход</option>
+            <option value="expense">Расход</option>
+        </select>
+        <label for="type"></label>
+
+        <select class="form-select form-input" id="category">
+            <option value="">Депозиты</option>
+            <option value="">Зарплата</option>
+            <option value="">Сбережения</option>
+            <option value="">Инвестиции</option>
+        </select>
+        <label for="category"></label>
+
+        <input class="form-control form-input" type="text" placeholder="Сумма в $" id="amount" value="500$">
+        <label for="amount"></label>
+
+        <input class="form-control form-input" type="text" id="date" value="11.09.2022">
+        <label for="date"></label>
+
+        <input class="form-control form-input" type="text" id="comment" placeholder="Комментарий...">
+        <label for="comment"></label>
+
+        <div class="operations-action">
+            <a href="#/operations" class="btn btn-success me-3 fw-medium">Сохранить</a>
+            <a href="#/operations" class="btn btn-danger fw-medium">Отмена</a>
+        </div>
+    </form>
+</div>

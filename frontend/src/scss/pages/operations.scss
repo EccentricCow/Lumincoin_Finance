@@ -1,0 +1,36 @@
+.operations-page {
+  padding-top: 100px;
+  padding-left: 60px;
+  padding-right: 60px;
+
+  .operations-action a {
+    padding: 11px 15px;
+    font-size: 14px;
+  }
+
+  &.operations {
+    .operations-action a {
+      width: 137px;
+      margin-bottom: 40px;
+    }
+
+    table a {
+      text-decoration: none;
+    }
+
+    ul.filter-tabs {
+      margin-bottom: 40px;
+    }
+  }
+
+  &.operations-action-page {
+    .form-input {
+      width: 397px;
+    }
+
+    .operations-action a {
+      padding: 11px 16px;
+    }
+  }
+}
+

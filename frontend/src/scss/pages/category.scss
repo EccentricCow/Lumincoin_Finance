@@ -1,0 +1,28 @@
+.category-page {
+  padding-top: 100px;
+  padding-left: 60px;
+  padding-right: 60px;
+
+  &.category {
+    .card {
+      height: 121px;
+    }
+
+    .add-category-element {
+      color: #CED4DA;
+      cursor: pointer;
+      transition: .3s;
+    }
+
+    .add-category-element:hover {
+      opacity: .7;
+    }
+  }
+
+  &.category-action {
+    input {
+      max-width: 397px;
+    }
+  }
+}
+

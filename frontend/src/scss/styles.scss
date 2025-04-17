@@ -1,0 +1,41 @@
+@use 'bootstrap' with (
+  $spacer: 10px,
+);
+
+@use 'layout';
+@use 'pages/auth';
+@use 'pages/homepage';
+@use 'pages/category';
+@use 'pages/operations';
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap');
+
+
+:root {
+  --bs-gutter-x: 0;
+  --bs-body-font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.modal-content {
+  width: 530px;
+  padding: 30px;
+
+  h5 {
+    color: #290661;
+  }
+}
+
+ul.filter-tabs {
+  gap: 20px;
+
+  li {
+    font-size: 16px;
+
+    span {
+      cursor: pointer;
+    }
+  }
+}
+
