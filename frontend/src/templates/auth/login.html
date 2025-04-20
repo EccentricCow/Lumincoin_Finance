@@ -1,5 +1,5 @@
 <div class="container d-flex align-items-center justify-content-center" id="auth-page">
-    <form class="w-100">
+    <form class="w-100 needs-validation">
         <img class="pb-5 mb-5 mx-auto d-block" src="../../img/logo.png" alt="Лого">
         <h1 class="h1 mb-3 pb-3 fw-medium text-primary-emphasis text-center">Вход</h1>
 
@@ -11,8 +11,9 @@
                           fill="#6C757D"/>
                 </svg>
             </div>
-            <input type="text" class="form-control" id="email" placeholder="Электронная почта">
-            <label for="email"></label>
+            <label for="email" class="form-label"></label>
+            <input type="text" class="form-control" id="email" name="email" placeholder="Электронная почта">
+            <div class="invalid-feedback"></div>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-text">
@@ -22,16 +23,17 @@
                           fill="#6C757D"/>
                 </svg>
             </div>
-            <input type="text" class="form-control" id="password" placeholder="Пароль">
             <label for="password"></label>
+            <input type="password" class="form-control" id="password" name="password" placeholder="Пароль">
+            <div class="invalid-feedback"></div>
         </div>
 
         <div class="checkbox mb-3 pb-3">
             <label>
-                <input type="checkbox" class="me-3" value="remember-me"> Запомнить меня
+                <input type="checkbox" class="me-3" value="remember-me" id="rememberMe"> Запомнить меня
             </label>
         </div>
-        <button class="w-100 btn btn-primary mb-3" type="submit">Войти</button>
+        <button class="w-100 btn btn-primary mb-3" type="submit" id="form-action">Войти</button>
         <p class="mb-0 lh-1">Ещё нет аккаунта? <a href="#/signup">Пройдите регистрацию</a></p>
     </form>
 </div>

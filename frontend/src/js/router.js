@@ -1,7 +1,9 @@
 import {Homepage} from "../components/homepage";
 import {Incomes} from "../components/incomes/incomes";
 import {Expenses} from "../components/expenses/expenses";
-import {Operations} from "../components/incomes/operations";
+import {Operations} from "../components/operations";
+import {Form} from "../components/form";
+import {Auth} from "../services/auth";
 
 export class Router {
     constructor() {
@@ -17,7 +19,7 @@ export class Router {
                 title: 'Создание аккаунта',
                 template: '/templates/auth/signup.html',
                 load: () => {
-
+                    new Form('signup');
                 },
             },
             {
@@ -25,7 +27,7 @@ export class Router {
                 title: 'Вход в систему',
                 template: '/templates/auth/login.html',
                 load: () => {
-
+                    new Form('login');
                 },
             },
             {
@@ -149,6 +151,11 @@ export class Router {
 
         // const urlRoute = window.location.hash.split('?')[0];
         const urlRoute = window.location.hash;
+        if (urlRoute === '#/logout') {
+            await Auth.logout();
+            window.location.href = '#/login';
+            return;
+        }
         const newRoute = this.routes.find(item => item.route === urlRoute);
 
         if (!newRoute) {
@@ -186,9 +193,13 @@ export class Router {
             }
         }
 
-        contentBlock.innerHTML = await fetch(newRoute.template).then(res => res.text());
-        this.titlePageElement.innerText = newRoute.title;
-        newRoute.load();
+        try {
+            contentBlock.innerHTML = await fetch(newRoute.template).then(res => res.text());
+            this.titlePageElement.innerText = newRoute.title;
+            newRoute.load();
+        } catch (e) {
+            console.error(e);
+        }
     }
 }
 

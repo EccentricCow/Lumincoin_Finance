@@ -10,8 +10,9 @@
                           fill="#6C757D"/>
                 </svg>
             </div>
-            <input type="text" class="form-control" id="name" placeholder="ФИО">
-            <label for="name"></label>
+            <input type="text" class="form-control" id="fullName" name="fullName" placeholder="Имя Фамилия">
+            <div class="invalid-feedback"></div>
+            <label for="fullName"></label>
         </div>
         <div class="input-group mb-3">
             <div class="input-group-text">
@@ -21,7 +22,8 @@
                           fill="#6C757D"/>
                 </svg>
             </div>
-            <input type="text" class="form-control" id="email" placeholder="Электронная почта">
+            <input type="text" class="form-control" id="email" name="email" placeholder="Электронная почта">
+            <div class="invalid-feedback"></div>
             <label for="email"></label>
         </div>
         <div class="input-group mb-3">
@@ -32,7 +34,8 @@
                           fill="#6C757D"/>
                 </svg>
             </div>
-            <input type="text" class="form-control" id="password" placeholder="Пароль">
+            <input type="password" class="form-control" id="password" name="password" placeholder="Пароль">
+            <div class="invalid-feedback"></div>
             <label for="password"></label>
         </div>
         <div class="input-group mb-3">
@@ -43,10 +46,11 @@
                           fill="#6C757D"/>
                 </svg>
             </div>
-            <input type="text" class="form-control" id="repeatPassword" placeholder="Подтверждение пароля">
-            <label for="repeatPassword"></label>
+            <input type="password" class="form-control" id="passwordRepeat" name="passwordRepeat" placeholder="Подтверждение пароля">
+            <div class="invalid-feedback"></div>
+            <label for="passwordRepeat"></label>
         </div>
-        <button class="w-100 btn btn-primary my-3" type="submit">Создать</button>
+        <button class="w-100 btn btn-primary my-3" type="submit" id="form-action">Создать</button>
         <p class="mb-0 lh-1">У вас уже есть аккаунт? <a href="#/login">Войдите в систему</a></p>
     </form>
 </div>
