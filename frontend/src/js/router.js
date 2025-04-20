@@ -153,13 +153,17 @@ export class Router {
         const urlRoute = window.location.hash;
         if (urlRoute === '#/logout') {
             await Auth.logout();
-            window.location.href = '#/login';
+            location.href = '#/login';
             return;
+        }
+        if (!localStorage.getItem(Auth.refreshTokenKey) && !(urlRoute === '#/signup' || urlRoute === '#/login')) {
+            history.pushState({}, '', '#/login');
+            return this.openRoute();
         }
         const newRoute = this.routes.find(item => item.route === urlRoute);
 
         if (!newRoute) {
-            window.location.href = '#/404';
+            location.href = '#/404';
             return;
         }
 

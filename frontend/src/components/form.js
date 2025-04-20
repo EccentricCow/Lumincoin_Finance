@@ -88,7 +88,8 @@ export class Form {
                 rememberMe: page === 'login' ? document.getElementById('rememberMe').checked : false,
             });
             if (result) {
-                if (!result.tokens || !result.tokens.accessToken || !result.tokens.refreshToken || !result.user) {
+                if (result.error || !result.tokens || !result.tokens.accessToken || !result.tokens.refreshToken || !result.user) {
+                    alert(result.message);
                     throw new Error(result.message);
                 }
                 Auth.setTokens(result.tokens.accessToken, result.tokens.refreshToken);

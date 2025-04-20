@@ -24,10 +24,11 @@ export class Auth {
                     return true;
                 }
             }
+
+            this.removeTokens();
+            location.href = '#/login';
+            return false;
         }
-        this.removeTokens();
-        location.href = '#/';
-        return false;
     };
 
     static async logout() {
