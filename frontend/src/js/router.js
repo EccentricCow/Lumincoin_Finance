@@ -1,9 +1,21 @@
 import {Homepage} from "../components/homepage";
 import {Incomes} from "../components/incomes/incomes";
 import {Expenses} from "../components/expenses/expenses";
-import {Operations} from "../components/operations";
+import {Operations} from "../components/operations/operations";
 import {Form} from "../components/form";
 import {Auth} from "../services/auth";
+import {config} from "../config/config";
+import {CustomHttp} from "../services/custom-http";
+import {IncomesEdit} from "../components/incomes/incomes-edit";
+import {IncomesDelete} from "../components/incomes/incomes-delete";
+import {IncomesCreate} from "../components/incomes/incomes-create";
+import {ExpensesCreate} from "../components/expenses/expenses-create";
+import {ExpensesEdit} from "../components/expenses/expenses-edit";
+import {ExpensesDelete} from "../components/expenses/expenses-delete";
+import {OperationCreate} from "../components/operations/operations-create";
+import {OperationDelete} from "../components/operations/operations-delete";
+import {OperationEdit} from "../components/operations/operations-edit";
+
 
 export class Router {
     constructor() {
@@ -12,7 +24,7 @@ export class Router {
 
         this.contentPageElement = document.getElementById('content');
         this.titlePageElement = document.getElementById('title');
-
+        this.balanceElement = null;
         this.routes = [
             {
                 route: '#/signup',
@@ -29,11 +41,6 @@ export class Router {
                 load: () => {
                     new Form('login');
                 },
-            },
-            {
-                route: '#/404',
-                title: '404',
-                template: '/templates/404.html',
             },
             {
                 route: '#/',
@@ -59,7 +66,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 template: '/templates/operations/operations-create.html',
                 load: () => {
-
+                    new OperationCreate();
                 },
             },
             {
@@ -68,13 +75,13 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 template: '/templates/operations/operations-edit.html',
                 load: () => {
-
+                    new OperationEdit();
                 },
             },
             {
                 route: '#/operations/delete',
                 load: () => {
-
+                    new OperationDelete();
                 },
             },
             {
@@ -92,7 +99,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 template: '/templates/incomes/incomes-create.html',
                 load: () => {
-
+                    new IncomesCreate();
                 },
             },
             {
@@ -101,13 +108,15 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 template: '/templates/incomes/incomes-edit.html',
                 load: () => {
-
+                    new IncomesEdit();
                 },
             },
             {
                 route: '#/incomes/delete',
+                title: null,
+                useLayout: null,
                 load: () => {
-
+                    new IncomesDelete();
                 },
             },
             {
@@ -125,7 +134,7 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 template: '/templates/expenses/expenses-create.html',
                 load: () => {
-
+                    new ExpensesCreate();
                 },
             },
             {
@@ -134,13 +143,13 @@ export class Router {
                 useLayout: '/templates/layout.html',
                 template: '/templates/expenses/expenses-edit.html',
                 load: () => {
-
+                    new ExpensesEdit();
                 },
             },
             {
                 route: '#/expenses/delete',
                 load: () => {
-
+                    new ExpensesDelete();
                 },
             },
         ];
@@ -149,8 +158,7 @@ export class Router {
     async openRoute() {
         let contentBlock = this.contentPageElement;
 
-        // const urlRoute = window.location.hash.split('?')[0];
-        const urlRoute = window.location.hash;
+        const urlRoute = window.location.hash.split('?')[0];
         if (urlRoute === '#/logout') {
             await Auth.logout();
             location.href = '#/login';
@@ -195,14 +203,46 @@ export class Router {
                     layoutLinksListElement.nextElementSibling.classList.add('show');
                 }
             }
+
+            const userInfo = Auth.getUserInfo();
+            document.getElementById('userName').innerText = userInfo.name + ' ' + userInfo.lastName;
+
+
+            this.balanceElement = document.getElementById('balance');
+            await this.updateBalance();
+            document.getElementById('balance-action').addEventListener('click', async (e) => {
+                const result = await CustomHttp.request(config.host + '/balance', 'PUT', {
+                    newBalance: document.getElementById('balance-input').value,
+                });
+                if (result && result.balance) {
+                    await this.updateBalance(result.balance);
+                }
+            });
         }
 
-        try {
-            contentBlock.innerHTML = await fetch(newRoute.template).then(res => res.text());
+        if (newRoute.title) {
             this.titlePageElement.innerText = newRoute.title;
-            newRoute.load();
-        } catch (e) {
-            console.error(e);
+        }
+
+        if (newRoute.route.split('/').at(-1) !== 'delete') {
+            try {
+                contentBlock.innerHTML = await fetch(newRoute.template).then(res => res.text());
+            } catch (e) {
+                console.error(e);
+            }
+        }
+
+        newRoute.load();
+    }
+
+    async updateBalance(balance = null) {
+        if (balance) {
+            this.balanceElement.innerHTML = balance + '$';
+        } else {
+            const result = await CustomHttp.request(config.host + '/balance');
+            if (result && !result.error) {
+                this.balanceElement.innerHTML = result.balance + '$';
+            }
         }
     }
 }

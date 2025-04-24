@@ -12,7 +12,7 @@ export class CustomHttp {
 
         let token = localStorage.getItem(Auth.accessTokenKey);
         if (token) {
-            params.headers['x-access-token'] = token;
+            params.headers['x-auth-token'] = token;
         }
 
         if (body) {
@@ -25,11 +25,14 @@ export class CustomHttp {
             if (response.status < 200 || response.status > 299) {
                 if (response.status === 401) {
                     const result = await Auth.processUnauthorizedResponse();
-                    return (result ? await this.request(url, method, body) : await response.json());
+                    if (result) {
+                        return await this.request(url, method, body);
+                    }
                 }
-
-                // throw new Error(response.json().message);
-                // как здесь обработать ошибку?
+                // location.href = '#/login';
+                // Auth.removeTokens();
+                // Auth.removeUserInfo();
+                return;
             }
             return await response.json();
         } catch (e) {

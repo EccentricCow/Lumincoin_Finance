@@ -32,7 +32,7 @@ export class Form {
                 {
                     name: 'fullName',
                     id: 'fullName',
-                    regexp: null,
+                    regexp: /^[А-ЯЁ][а-яё]*(?:\s[А-ЯЁ][а-яё]*)*$/,
                     element: null,
                     isValid: false,
                 },

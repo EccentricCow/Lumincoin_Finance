@@ -6,12 +6,14 @@
   &.category {
     .card {
       height: 121px;
+      //min-width: 350px;
     }
 
     .add-category-element {
       color: #CED4DA;
       cursor: pointer;
       transition: .3s;
+      //min-width: 350px;
     }
 
     .add-category-element:hover {
