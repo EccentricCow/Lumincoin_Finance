@@ -1,40 +1,67 @@
-import * as tempusDominus from "@eonasdan/tempus-dominus";
 import Chart from 'chart.js/auto';
+import {FilterByDateService} from "../services/filter-by-date-service";
+import {OperationsService} from "../services/operations-service";
 
 export class Homepage {
     constructor() {
+        this.incomesPieData = [];
+        this.expensesPieData = [];
         this.init().then();
+        const timeFilter = new FilterByDateService();
+        timeFilter.filterParamElements.forEach(filterBtn => {
+                filterBtn.addEventListener('click', async (e) => {
+                    this.init(await timeFilter.activateFilterElements(filterBtn)).then();
+                });
+            }
+        );
+    };
 
-    }
+    async init(params) {
+        const operations = await OperationsService.getOperations(params);
+        if (operations && operations.length > 0) {
+            operations.forEach(operation => {
+                this.calculateDataPies(operation);
+            });
+        }
+        this.activatePies();
+    };
 
-    async init() {
-        new tempusDominus.TempusDominus(document.getElementById('datetimepicker1'));
-        new tempusDominus.TempusDominus(document.getElementById('datetimepicker2'));
-
-        const incomesPie = document.getElementById('incomesPie');
-        const data = {
-            labels: [
-                'Red',
-                'Orange',
-                'Yellow',
-                'Green',
-                'Blue'
-            ],
-            datasets: [{
-                data: [300, 50, 100, 400, 100],
-                backgroundColor: [
-                    '#DC3545',
-                    '#FD7E14',
-                    '#FFC107',
-                    '#20C997',
-                    '#0D6EFD',
-                ],
-            }]
+    calculateDataPies(operation) {
+        const operationItem = {
+            category: operation.category,
+            amount: operation.amount,
         };
+        let similarField = null;
+        if (operation.type === 'income') {
+            similarField = this.incomesPieData.find(item => item.category === operation.category);
+            similarField ? similarField.amount += operation.amount : this.incomesPieData.push(operationItem);
+        } else {
+            similarField = this.expensesPieData.find(item => item.category === operation.category);
+            similarField ? similarField.amount += operation.amount : this.expensesPieData.push(operationItem);
+        }
+    };
+
+    activatePies() {
+        const incomesPie = document.getElementById('incomesPie');
+        const expensesPie = document.getElementById('expensesPie');
+
+        if (Chart.getChart('incomesPie')) {
+            Chart.getChart('incomesPie').destroy();
+        }
+        if (Chart.getChart('expensesPie')) {
+            Chart.getChart('expensesPie').destroy();
+        }
 
         new Chart(incomesPie, {
             type: 'pie',
-            data: data,
+            data: {
+                labels: this.incomesPieData.map(item => item.category),
+                datasets: [
+                    {
+                        data: this.incomesPieData.map(item => item.amount),
+                    },
+                ],
+            },
             options: {
                 responsive: true,
                 plugins: {
@@ -55,10 +82,16 @@ export class Homepage {
             },
         });
 
-        const expensesPie = document.getElementById('expensesPie');
         new Chart(expensesPie, {
             type: 'pie',
-            data: data,
+            data: {
+                labels: this.expensesPieData.map(item => item.category),
+                datasets: [
+                    {
+                        data: this.expensesPieData.map(item => item.amount),
+                    },
+                ],
+            },
             options: {
                 responsive: true,
                 plugins: {
@@ -78,6 +111,5 @@ export class Homepage {
                 }
             },
         });
-    }
-
+    };
 }

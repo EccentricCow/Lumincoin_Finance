@@ -2,31 +2,36 @@
     <h1 class="text-primary-emphasis pb-5 mb-5">Главная</h1>
     <ul class="filter-tabs nav nav-pills d-flex align-items-center fw-medium">
         <li class="nav-item">
-            <button class="btn btn-sm btn-outline-secondary active fw-medium" type="button">Сегодня</button>
+            <button class="filter-param btn btn-sm btn-outline-secondary active fw-medium" type="button" id="today">Сегодня</button>
         </li>
         <li class="nav-item">
-            <button class="btn btn-sm btn-outline-secondary fw-medium" type="button">Неделя</button>
+            <button class="filter-param btn btn-sm btn-outline-secondary fw-medium" type="button" id="week">Неделя</button>
         </li>
         <li class="nav-item">
-            <button class="btn btn-sm btn-outline-secondary fw-medium" type="button">Месяц</button>
+            <button class="filter-param btn btn-sm btn-outline-secondary fw-medium" type="button" id="month">Месяц</button>
         </li>
         <li class="nav-item">
-            <button class="btn btn-sm btn-outline-secondary fw-medium" type="button">Год</button>
+            <button class="filter-param btn btn-sm btn-outline-secondary fw-medium" type="button" id="year">Год</button>
         </li>
         <li class="nav-item">
-            <button class="btn btn-sm btn-outline-secondary fw-medium" type="button">Все</button>
+            <button class="filter-param btn btn-sm btn-outline-secondary fw-medium" type="button" id="all">Все</button>
         </li>
-        <li class="nav-item">
-            <button class="btn btn-sm btn-outline-secondary fw-medium" type="button">Интервал</button>
-        </li>
-        <li class="d-flex align-items-center">
-            <div>
-                c<a class="ms-4 text-secondary link-offset-2" id="datetimepicker1" data-td-target="#datetimepicker1"
-                    data-td-toggle="datetimepicker">Дата</a>
+        <li class="nav-item d-flex">
+            <button class="filter-param btn btn-sm btn-outline-secondary fw-medium me-4" type="button" id="interval">Интервал</button>
+
+            <div class="d-flex align-items-center">
+                c
+                <a class="ms-4 text-secondary link-offset-2" id="datetimepickerMin" data-td-target="#datetimepickerMin"
+                   data-td-toggle="datetimepicker">
+                    Дата
+                </a>
             </div>
-            <div class="ms-5">по<a class="ms-4 text-secondary link-offset-2" id="datetimepicker2"
-                                   data-td-target="#datetimepicker1"
-                                   data-td-toggle="datetimepicker">Дата</a>
+            <div class="ms-5 d-flex align-items-center">
+                по
+                <a class="ms-4 text-secondary link-offset-2" id="datetimepickerMax" data-td-target="#datetimepickerMax"
+                   data-td-toggle="datetimepicker">
+                    Дата
+                </a>
             </div>
         </li>
     </ul>

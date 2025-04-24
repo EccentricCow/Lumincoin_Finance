@@ -14,7 +14,7 @@ export class Auth {
                     'content-type': 'application/json',
                     'Accept': 'application/json',
                 },
-                body: JSON.stringify({refreshToken: refreshToken,})
+                body: JSON.stringify({refreshToken: refreshToken})
             });
 
             if (response && response.status === 200) {
@@ -26,6 +26,7 @@ export class Auth {
             }
 
             this.removeTokens();
+            this.removeUserInfo();
             location.href = '#/login';
             return false;
         }
@@ -46,16 +47,16 @@ export class Auth {
             if (response && response.status === 200) {
                 const result = await response.json();
                 if (result && !result.error) {
-                    Auth.removeTokens();
-                    localStorage.removeItem(Auth.userInfoKey);
+                    this.removeTokens();
+                    this.removeUserInfo();
                 }
             }
         }
     };
 
     static setTokens(accessToken, refreshToken) {
-        localStorage.setItem(Auth.accessTokenKey, accessToken);
-        localStorage.setItem(Auth.refreshTokenKey, refreshToken);
+        localStorage.setItem(this.accessTokenKey, accessToken);
+        localStorage.setItem(this.refreshTokenKey, refreshToken);
     };
 
     static removeTokens() {
@@ -64,6 +65,14 @@ export class Auth {
     };
 
     static setUserInfo(userInfo) {
-        localStorage.setItem(Auth.userInfoKey, JSON.stringify(userInfo));
+        localStorage.setItem(this.userInfoKey, JSON.stringify(userInfo));
     };
+
+    static getUserInfo() {
+        return JSON.parse(localStorage.getItem(this.userInfoKey));
+    };
+
+    static removeUserInfo() {
+        localStorage.removeItem(this.userInfoKey);
+    }
 }

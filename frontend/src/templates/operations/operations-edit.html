@@ -7,25 +7,22 @@
         </select>
         <label for="type"></label>
 
-        <select class="form-select form-input" id="category">
-            <option value="">Депозиты</option>
-            <option value="">Зарплата</option>
-            <option value="">Сбережения</option>
-            <option value="">Инвестиции</option>
-        </select>
-        <label for="category"></label>
+        <select class="form-select form-input" id="categoryList"></select>
+        <label for="categoryList"></label>
 
-        <input class="form-control form-input" type="text" placeholder="Сумма в $" id="amount" value="500$">
+        <input class="form-control form-input" type="number" placeholder="Сумма в $" id="amount">
         <label for="amount"></label>
+        <div class="invalid-feedback"></div>
 
-        <input class="form-control form-input" type="text" id="date" value="11.09.2022">
+        <input class="form-control form-input" type="date" id="date">
         <label for="date"></label>
+        <div class="invalid-feedback"></div>
 
-        <input class="form-control form-input" type="text" id="comment" placeholder="Комментарий...">
+        <input class="form-control form-input" type="text" placeholder="Комментарий" id="comment">
         <label for="comment"></label>
 
         <div class="operations-action">
-            <a href="#/operations" class="btn btn-success me-3 fw-medium">Сохранить</a>
+            <a href="javascript:void(0)" class="btn btn-success me-3 fw-medium" id="action">Создать</a>
             <a href="#/operations" class="btn btn-danger fw-medium">Отмена</a>
         </div>
     </form>
